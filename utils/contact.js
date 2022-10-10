@@ -40,4 +40,27 @@ const checkDuplicated = (nama) => {
   return contacts.find((contact) => contact.nama === nama);
 };
 
-module.exports = { loadContact, findContact, addContact, checkDuplicated };
+const deleteContact = (nama) => {
+  const contacts = loadContact();
+  const filteredContacts = contacts.filter((contact) => contact.nama !== nama);
+  saveContact(filteredContacts);
+};
+
+const updateContact = (newContact) => {
+  const contacts = loadContact();
+  const filteredContacts = contacts.filter(
+    (contact) => contact.nama !== newContact.oldName
+  );
+  delete newContact.oldName;
+  filteredContacts.push(newContact);
+  saveContact(filteredContacts);
+};
+
+module.exports = {
+  loadContact,
+  findContact,
+  addContact,
+  checkDuplicated,
+  deleteContact,
+  updateContact,
+};

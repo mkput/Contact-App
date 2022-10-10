@@ -12,8 +12,11 @@ const {
   detailsContactHandlers,
   addContactHandlers,
   saveContactHandler,
+  deleteContactHandler,
+  editContactHandler,
+  updateContactHandler,
 } = require("./handlers");
-const { addDataValidation } = require("./validation");
+const { addDataValidation, updateDataValidation } = require("./validation");
 const app = express();
 const port = 3000;
 
@@ -40,7 +43,13 @@ app.get("/contact", contactHandlers);
 
 app.post("/contact", addDataValidation, saveContactHandler);
 
+app.post("/contact/update", updateDataValidation, updateContactHandler);
+
 app.get("/contact/add", addContactHandlers);
+
+app.get("/contact/delete/:nama", deleteContactHandler);
+
+app.get("/contact/edit/:nama", editContactHandler);
 
 app.get("/contact/:nama", detailsContactHandlers);
 

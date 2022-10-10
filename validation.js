@@ -13,4 +13,16 @@ const addDataValidation = [
   check("nohp").isMobilePhone("id-ID").withMessage("No HP tidak valid!"),
 ];
 
-module.exports = { addDataValidation };
+const updateDataValidation = [
+  body("nama").custom((value, { req }) => {
+    const duplicated = checkDuplicated(value);
+    if (value !== req.body.oldName && duplicated) {
+      throw new Error("Nama sudah digunakan");
+    }
+    return true;
+  }),
+  check("email").isEmail().withMessage("Email tidak valid!"),
+  check("nohp").isMobilePhone("id-ID").withMessage("No HP tidak valid!"),
+];
+
+module.exports = { addDataValidation, updateDataValidation };
